@@ -1105,59 +1105,30 @@ async function callOpenRouter(messages, systemPrompt, maxTokens, apiKey) {
       : m.content
   }));
 
-  const freeModels = [
-    'meta-llama/llama-3.3-70b-instruct:free',
-    'google/gemma-3-12b-it:free',
-    'google/gemma-3-4b-it:free',
-    'mistralai/mistral-small-3.1-24b-instruct:free',
-    'qwen/qwen3-8b:free',
-    'deepseek/deepseek-chat-v3-0324:free'
-  ];
+  const body = JSON.stringify({
+    model: 'openrouter/auto',
+    max_tokens: maxTokens || 1500,
+    messages: cleanMsgs
+  });
 
-  let lastError = '';
-  for (const model of freeModels) {
-    try {
-      const body = JSON.stringify({
-        model: model,
-        max_tokens: maxTokens || 1500,
-        messages: cleanMsgs
-      });
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Authorization', 'Bearer ' + apiKey);
 
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Authorization', 'Bearer ' + apiKey);
-      headers.append('HTTP-Referer', 'https://kidvera.app');
-      headers.append('X-Title', 'Kidvera Studio');
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: headers,
+    body: body
+  });
 
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: headers,
-        body: body
-      });
-
-      const data = await response.json();
-
-      if (data.error) {
-        lastError = typeof data.error === 'string' ? data.error : (data.error.message || JSON.stringify(data.error));
-        if (lastError.includes('No endpoints') || lastError.includes('rate') || lastError.includes('quota') || response.status === 429) {
-          continue;
-        }
-        throw new Error('OpenRouter error: ' + lastError);
-      }
-
-      const text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-      if (text) return text;
-
-    } catch(e) {
-      if (e.message && (e.message.includes('No endpoints') || e.message.includes('rate') || e.message.includes('quota'))) {
-        lastError = e.message;
-        continue;
-      }
-      throw e;
-    }
+  const data = await response.json();
+  if (data.error) {
+    const msg = typeof data.error === 'string' ? data.error : (data.error.message || JSON.stringify(data.error));
+    throw new Error('OpenRouter error: ' + msg);
   }
-
-  throw new Error('Semua model OpenRouter sedang penuh. Coba lagi dalam beberapa menit.');
+  const text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+  if (text) return text;
+  throw new Error('OpenRouter: tidak ada respons. Coba lagi.');
 }
 
 async function callGemini(messages, systemPrompt, maxTokens, apiKey) {
