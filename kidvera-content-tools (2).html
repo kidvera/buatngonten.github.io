@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kidvera Content Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF6EF;
+  --amber: #C8832A;
+  --amber-light: #F0C070;
+  --amber-pale: #FDF3E0;
+  --brown: #5C3A1E;
+  --brown-light: #8B6040;
+  --green: #2D5016;
+  --green-mid: #4A7A25;
+  --green-light: #E8F0DC;
+  --text: #2C1A0E;
+  --text-mid: #6B4C2A;
+  --text-soft: #A0856A;
+  --border: #E8D8C0;
+  --white: #FFFFFF;
+  --shadow: 0 4px 24px rgba(90,50,10,0.10);
+  --shadow-lg: 0 8px 40px rgba(90,50,10,0.16);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: var(--brown);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.header-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--amber-light);
+  letter-spacing: -0.5px;
+}
+.header-logo span { color: var(--white); }
+.header-sub {
+  font-size: 0.78rem;
+  color: var(--amber-light);
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+/* TABS */
+.tabs-bar {
+  background: var(--white);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  padding: 0 24px;
+  gap: 0;
+  position: sticky;
+  top: 62px;
+  z-index: 90;
+  scrollbar-width: none;
+}
+.tabs-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 14px 22px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  margin-bottom: -2px;
+}
+.tab-btn:hover { color: var(--amber); }
+.tab-btn.active {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+/* MAIN */
+.main { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* SECTION CARDS */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-desc {
+  font-size: 0.83rem;
+  color: var(--text-soft);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* FORM ELEMENTS */
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--brown-light);
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+input[type="text"], input[type="number"], textarea, select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text);
+  background: var(--amber-pale);
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+  margin-bottom: 14px;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(200,131,42,0.12);
+  background: var(--white);
+}
+textarea { resize: vertical; min-height: 90px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+/* BUTTONS */
+.btn {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 12px 26px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.btn-primary {
+  background: var(--amber);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(200,131,42,0.25);
+}
+.btn-primary:hover { background: var(--brown); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(90,50,10,0.2); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  background: var(--green-light);
+  color: var(--green);
+  border: 1.5px solid var(--green-mid);
+}
+.btn-secondary:hover { background: var(--green-mid); color: var(--white); }
+.btn-outline {
+  background: transparent;
+  color: var(--amber);
+  border: 1.5px solid var(--amber);
+}
+.btn-outline:hover { background: var(--amber); color: var(--white); }
+
+/* CHIP SELECTORS */
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--amber-pale);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.chip:hover { border-color: var(--amber); color: var(--amber); }
+.chip.selected { background: var(--amber); color: var(--white); border-color: var(--amber); }
+
+/* OUTPUT BOX */
+.output-box {
+  background: var(--amber-pale);
+  border: 1.5px solid var(--amber-light);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 18px;
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: var(--text);
+  white-space: pre-wrap;
+  min-height: 120px;
+  position: relative;
+}
+.output-box.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-soft);
+  font-style: italic;
+  min-height: 160px;
+}
+.output-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* COPY BUTTON */
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.copy-btn:hover { background: var(--amber); color: var(--white); border-color: var(--amber); }
+
+/* SCHEDULE GRID */
+.schedule-grid { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 0; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+.sg-header { background: var(--brown); color: var(--white); font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; padding: 10px 14px; text-align: center; letter-spacing: 0.5px; }
+.sg-day { background: var(--amber-pale); font-weight: 600; font-size: 0.83rem; color: var(--brown); padding: 12px 14px; border-top: 1px solid var(--border); display: flex; align-items: center; }
+.sg-cell { padding: 12px 14px; border-top: 1px solid var(--border); border-left: 1px solid var(--border); font-size: 0.82rem; line-height: 1.6; }
+.sg-cell.slow { background: var(--green-light); }
+.sg-cell.fast { background: #FFF8EC; }
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin: 2px 2px 2px 0;
+}
+.badge-r { background: #FFE4B5; color: #8B4513; }
+.badge-s { background: #E0F0FF; color: #1A5A9A; }
+.badge-c { background: var(--green-light); color: var(--green); }
+
+/* METRIC ROW */
+.metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+@media (max-width: 560px) { .metric-row { grid-template-columns: 1fr 1fr; } }
+.metric-card {
+  background: var(--amber-pale);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+.metric-label { font-size: 0.72rem; color: var(--text-soft); margin-bottom: 4px; }
+.metric-val { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--brown); }
+
+/* COMPETITOR TABLE */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+.comp-table th { background: var(--brown); color: var(--white); font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700; padding: 10px 12px; text-align: left; letter-spacing: 0.3px; }
+.comp-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+.comp-table tr:nth-child(even) td { background: var(--amber-pale); }
+.comp-table tr:last-child td { border-bottom: none; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 0.72rem; font-weight: 600; margin: 1px; }
+.tag-plus { background: #D4F0C0; color: #2A6010; }
+.tag-minus { background: #FFE0DC; color: #901A10; }
+.tag-opp { background: #E0EEFF; color: #1A4080; }
+
+/* SPINNER */
+.spinner {
+  display: inline-block;
+  width: 22px; height: 22px;
+  border: 3px solid var(--amber-light);
+  border-top-color: var(--amber);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* PLATFORM TOGGLE */
+.platform-toggle { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.pt-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--amber-pale);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.pt-btn.active { background: var(--brown); color: var(--white); border-color: var(--brown); }
+
+/* INFO BOX */
+.info-box {
+  background: var(--green-light);
+  border-left: 4px solid var(--green-mid);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  font-size: 0.83rem;
+  color: var(--green);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--brown);
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.section-sub {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-bottom: 24px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">Kid<span>vera</span> Content Studio</div>
+    <div class="header-sub">@parenting.missrahma · Tools Konten Terintegrasi</div>
+  </div>
+  <div id="api-key-status" style="font-size:0.78rem;color:var(--amber-light);"></div>
+</div>
+
+<!-- API KEY MODAL -->
+<div id="api-key-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--white);border-radius:16px;padding:28px;max-width:440px;width:100%;box-shadow:var(--shadow-lg);">
+    <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--brown);margin-bottom:12px;">🔑 Setup AI Engine</div>
+
+    <!-- Engine selector -->
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <button id="btn-engine-gemini" onclick="selectEngine('gemini')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--amber);background:var(--amber);color:white;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;font-size:0.82rem;">
+        🟦 Gemini<br><span style="font-weight:400;font-size:0.72rem;">Google AI Studio</span>
+      </button>
+      <button id="btn-engine-grok" onclick="selectEngine('grok')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-mid);font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;font-size:0.82rem;">
+        ⚡ Grok<br><span style="font-weight:400;font-size:0.72rem;">xAI (X/Twitter)</span>
+      </button>
+    </div>
+
+    <!-- Gemini instructions -->
+    <div id="instructions-gemini" style="font-size:0.82rem;color:var(--text-soft);margin-bottom:10px;line-height:1.7;background:var(--amber-pale);border-radius:8px;padding:10px 12px;">
+      Cara dapat API key Gemini (gratis):<br>
+      1. Buka <strong>aistudio.google.com</strong><br>
+      2. Klik <strong>Get API key</strong> → Create API key<br>
+      3. Copy key (mulai <code>AIza...</code>) → paste di bawah
+    </div>
+
+    <!-- Grok instructions -->
+    <div id="instructions-grok" style="display:none;font-size:0.82rem;color:var(--text-soft);margin-bottom:10px;line-height:1.7;background:var(--amber-pale);border-radius:8px;padding:10px 12px;">
+      Cara dapat API key Grok (gratis):<br>
+      1. Buka <strong>console.x.ai</strong><br>
+      2. Login pakai akun X/Twitter<br>
+      3. Menu <strong>API Keys</strong> → Create API Key<br>
+      4. Copy key (mulai <code>xai-...</code>) → paste di bawah
+    </div>
+
+    <div style="font-size:0.78rem;color:var(--green);background:var(--green-light);border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+      🔒 Key hanya tersimpan di HP-mu — tidak dikirim ke mana-mana selain API yang kamu pilih
+    </div>
+
+    <input type="password" id="api-key-input" placeholder="Paste API key di sini..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.88rem;font-family:'DM Sans',sans-serif;margin-bottom:12px;background:var(--amber-pale);">
+
+    <div style="display:flex;gap:10px;">
+      <button onclick="submitApiKey()" class="btn btn-primary" style="flex:1;">Simpan & Mulai</button>
+      <button onclick="hideApiKeyModal()" style="padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-size:0.85rem;color:var(--text-soft);">Nanti</button>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('script')">✍️ Script AI</button>
+  <button class="tab-btn" onclick="showTab('evaluasi')">📊 Evaluasi Post</button>
+  <button class="tab-btn" onclick="showTab('kompetitor')">🔍 Kompetitor</button>
+  <button class="tab-btn" onclick="showTab('schedule')">📅 Schedule</button>
+  <button class="tab-btn" onclick="showTab('performa')">📈 Performa</button>
+</div>
+
+<div class="main">
+
+  <!-- ===== TAB: SCRIPT ===== -->
+  <div class="tab-panel active" id="tab-script">
+    <div class="section-title">AI Script Generator</div>
+    <div class="section-sub">Buat script konten Kidvera yang mengena — sesuai platform, hook, dan gaya storytelling kamu.</div>
+
+    <div class="card">
+      <div class="card-title">⚙️ Pengaturan Konten</div>
+      <div class="card-desc">Isi detail konten yang mau kamu buat. Semakin spesifik, semakin baik hasilnya.</div>
+
+      <label>Judul / Topik Konten</label>
+      <input type="text" id="s-judul" placeholder="cth: Anak susah fokus? Coba stimulasi taktil ini">
+
+      <div class="form-row">
+        <div>
+          <label>Platform Target</label>
+          <select id="s-platform" onchange="updatePlatformOptions()">
+            <option value="instagram">Instagram</option>
+            <option value="threads">Threads</option>
+            <option value="youtube">YouTube</option>
+            <option value="wa-channel">Saluran WA</option>
+          </select>
+        </div>
+        <div>
+          <label>Tipe Konten</label>
+          <select id="s-tipe">
+            <option value="reels">Reels</option>
+            <option value="carousel">Carousel</option>
+            <option value="caption-stories">Caption (Feed)</option>
+            <option value="stories">Stories</option>
+            <option value="polling">Polling</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Hook chips: berubah sesuai platform -->
+      <div id="hook-section-ig">
+        <label>Pendekatan Konten <span style="font-size:0.75rem;color:var(--text-soft);">(Instagram — Personal Branding AVA)</span></label>
+        <div class="info-box" style="margin-bottom:12px;">Instagram pakai personal branding: tunjukkan siapa kamu sebagai ibu & pendidik — bukan sekadar tips, tapi perspektif unik Rahma yang tidak ada di tempat lain.</div>
+        <div class="chip-group" id="hook-chips">
+          <div class="chip selected" onclick="selectChip(this, 'hook')">Me-Centric (pengalaman pribadi)</div>
+          <div class="chip" onclick="selectChip(this, 'hook')">Behind the Scene kelas</div>
+          <div class="chip" onclick="selectChip(this, 'hook')">Momen nyata dengan anak</div>
+          <div class="chip" onclick="selectChip(this, 'hook')">Sudut pandang berbeda</div>
+          <div class="chip" onclick="selectChip(this, 'hook')">Fakta yang bikin kaget</div>
+          <div class="chip" onclick="selectChip(this, 'hook')">Polling / pertanyaan komunitas</div>
+        </div>
+
+        <!-- Sub-pilihan untuk Polling -->
+        <div id="polling-sub" style="display:none;margin-top:10px;">
+          <label>Topik Polling <span style="font-size:0.75rem;color:var(--text-soft);">(pilih sudut polling)</span></label>
+          <div class="chip-group" id="polling-chips">
+            <div class="chip selected" onclick="selectChip(this, 'polling')">Kebiasaan belajar anak</div>
+            <div class="chip" onclick="selectChip(this, 'polling')">Tantangan parenting</div>
+            <div class="chip" onclick="selectChip(this, 'polling')">Preferensi metode belajar</div>
+            <div class="chip" onclick="selectChip(this, 'polling')">Pengalaman sensorik anak</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="hook-section-threads" style="display:none;">
+        <label>Tipe Cerita <span style="font-size:0.75rem;color:var(--text-soft);">(Threads — Personal Storytelling Ahmad Chairdir)</span></label>
+        <div class="info-box" style="margin-bottom:12px;">Threads pakai framework storytelling: pilih tipe cerita → pilih struktur narasi → AI tulis thread 1/ 2/ 3/ ... yang autentik dan tidak terasa template.</div>
+        <div class="chip-group" id="hook-chips-threads">
+          <div class="chip selected" onclick="selectChipThreads(this)">🌱 Origin Story</div>
+          <div class="chip" onclick="selectChipThreads(this)">💔 Failure Story</div>
+          <div class="chip" onclick="selectChipThreads(this)">🔄 Pivot Story</div>
+          <div class="chip" onclick="selectChipThreads(this)">💡 Value-in-Action</div>
+          <div class="chip" onclick="selectChipThreads(this)">✨ Transformasi Murid/Anak</div>
+          <div class="chip" onclick="selectChipThreads(this)">🗳️ Polling / Pertanyaan</div>
+        </div>
+        <label style="margin-top:8px;">Framework Narasi</label>
+        <div class="chip-group" id="framework-chips">
+          <div class="chip selected" onclick="selectChip(this, 'framework')">Hero's Journey</div>
+          <div class="chip" onclick="selectChip(this, 'framework')">Curiosity Bridge</div>
+          <div class="chip" onclick="selectChip(this, 'framework')">Kontras & Paradoks</div>
+          <div class="chip" onclick="selectChip(this, 'framework')">Open Loop</div>
+        </div>
+      </div>
+
+      <label>Durasi / Panjang Konten</label>
+      <div class="chip-group" id="durasi-chips">
+        <div class="chip" onclick="selectChip(this, 'durasi')">30 detik</div>
+        <div class="chip selected" onclick="selectChip(this, 'durasi')">60 detik</div>
+        <div class="chip" onclick="selectChip(this, 'durasi')">90 detik</div>
+        <div class="chip" onclick="selectChip(this, 'durasi')">Thread panjang</div>
+        <div class="chip" onclick="selectChip(this, 'durasi')">Caption pendek</div>
+      </div>
+
+      <label>Gaya Bahasa</label>
+      <div class="chip-group" id="gaya-chips">
+        <div class="chip selected" onclick="selectChip(this, 'gaya')">Hangat & personal</div>
+        <div class="chip" onclick="selectChip(this, 'gaya')">Edukatif & riset-based</div>
+        <div class="chip" onclick="selectChip(this, 'gaya')">Santai & relatable</div>
+        <div class="chip" onclick="selectChip(this, 'gaya')">Inspiratif & reflektif</div>
+      </div>
+
+      <button class="btn btn-primary" onclick="generateScript()" id="btn-generate">
+        ✨ Generate Script dengan AI
+      </button>
+    </div>
+
+    <div class="card" id="script-output-card" style="display:none">
+      <div class="card-title">📝 Script Hasil Generate</div>
+      <div class="output-box" id="script-output">
+        <button class="copy-btn" onclick="copyOutput('script-output')">Salin</button>
+        <div id="script-text"></div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-secondary" onclick="generateScript()">🔄 Generate Ulang</button>
+        <button class="btn btn-outline" onclick="copyOutputText()">📋 Salin Script</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: EVALUASI ===== -->
+  <div class="tab-panel" id="tab-evaluasi">
+    <div class="section-title">Evaluasi Post</div>
+    <div class="section-sub">Upload screenshot insights dari Instagram — AI baca angkanya langsung dan kasih evaluasi komprehensif.</div>
+
+    <div class="card">
+      <div class="card-title">📸 Upload Screenshot Insights</div>
+      <div class="card-desc">Buka Instagram → Post → Lihat Insight → Screenshot halaman insight → Upload di sini. Bisa upload lebih dari 1 screenshot.</div>
+
+      <!-- Upload Area -->
+      <div id="upload-area" onclick="document.getElementById('img-upload').click()" style="
+        border: 2px dashed var(--amber-light);
+        border-radius: 14px;
+        padding: 36px 20px;
+        text-align: center;
+        cursor: pointer;
+        background: var(--amber-pale);
+        transition: all 0.2s;
+        margin-bottom: 14px;
+      ">
+        <div style="font-size:2rem;margin-bottom:8px;">📷</div>
+        <div style="font-weight:600;color:var(--brown);font-size:0.9rem;">Tap untuk upload screenshot insights</div>
+        <div style="font-size:0.78rem;color:var(--text-soft);margin-top:4px;">JPG, PNG — bisa multiple screenshot</div>
+      </div>
+      <input type="file" id="img-upload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(event)">
+
+      <!-- Preview thumbnails -->
+      <div id="img-preview-row" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;"></div>
+
+      <label>Judul / Topik Post (opsional — bantu AI)</label>
+      <input type="text" id="e-judul" placeholder="cth: Kenapa anak susah duduk diam saat belajar">
+
+      <label>Caption yang Dipakai (opsional)</label>
+      <textarea id="e-script" placeholder="Paste caption post ini kalau mau dievaluasi juga..." style="min-height:70px;"></textarea>
+
+      <label>Platform</label>
+      <div class="platform-toggle">
+        <button class="pt-btn active" onclick="selectPlatformEval(this, 'Instagram')">Instagram</button>
+        <button class="pt-btn" onclick="selectPlatformEval(this, 'Threads')">Threads</button>
+        <button class="pt-btn" onclick="selectPlatformEval(this, 'YouTube')">YouTube</button>
+      </div>
+
+      <button class="btn btn-primary" onclick="evaluasiPost()" id="btn-eval" style="margin-top:6px;">
+        🔬 Evaluasi dengan AI
+      </button>
+    </div>
+
+    <div class="card" id="eval-output-card" style="display:none">
+      <div class="card-title">📊 Hasil Evaluasi AI</div>
+      <div class="output-box" id="eval-output">
+        <button class="copy-btn" onclick="copyOutput('eval-output')">Salin</button>
+        <div id="eval-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: KOMPETITOR ===== -->
+  <div class="tab-panel" id="tab-kompetitor">
+    <div class="section-title">Analisis Kompetitor</div>
+    <div class="section-sub">Lihat strategy kompetitor di niche parenting & pendidikan anak Indonesia — dan temukan celah diferensiasi Kidvera.</div>
+
+    <div class="card">
+      <div class="card-title">🔍 Analisis Kompetitor AI</div>
+      <div class="card-desc">Masukkan nama akun atau niche untuk dianalisis. AI akan breakdown strategi, kelebihan, kekurangan, dan peluang kamu.</div>
+
+      <label>Akun / Niche yang Mau Dianalisis</label>
+      <input type="text" id="k-niche" placeholder="cth: parenting Indonesia, sensorik anak, montessori Indonesia">
+
+      <label>Platform Kompetitor</label>
+      <div class="chip-group" id="komp-platform-chips">
+        <div class="chip selected" onclick="selectChip(this, 'komp-platform')">Instagram</div>
+        <div class="chip" onclick="selectChip(this, 'komp-platform')">Threads</div>
+        <div class="chip" onclick="selectChip(this, 'komp-platform')">YouTube</div>
+        <div class="chip" onclick="selectChip(this, 'komp-platform')">TikTok</div>
+      </div>
+
+      <label>Fokus Analisis</label>
+      <div class="chip-group" id="komp-fokus-chips">
+        <div class="chip selected" onclick="selectChip(this, 'komp-fokus')">Strategi konten</div>
+        <div class="chip" onclick="selectChip(this, 'komp-fokus')">Hook & storytelling</div>
+        <div class="chip" onclick="selectChip(this, 'komp-fokus')">Peluang gap</div>
+        <div class="chip" onclick="selectChip(this, 'komp-fokus')">Monetisasi</div>
+      </div>
+
+      <button class="btn btn-primary" onclick="analisisKompetitor()">🔍 Analisis dengan AI</button>
+    </div>
+
+    <div class="card" id="komp-output-card" style="display:none">
+      <div class="card-title">📋 Hasil Analisis Kompetitor</div>
+      <div class="output-box" id="komp-output">
+        <button class="copy-btn" onclick="copyOutput('komp-output')">Salin</button>
+        <div id="komp-text"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗺️ Peta Kompetitor Kidvera</div>
+      <div class="card-desc">Snapshot differensiasi Kidvera vs kompetitor umum di niche parenting Indonesia.</div>
+      <div style="overflow-x:auto;">
+        <table class="comp-table">
+          <tr>
+            <th>Aspek</th>
+            <th>Kompetitor Umum</th>
+            <th>Kidvera (kamu)</th>
+          </tr>
+          <tr>
+            <td><strong>Pendekatan</strong></td>
+            <td>Tips & trick instan</td>
+            <td>Pengalaman + riset + spiritual</td>
+          </tr>
+          <tr>
+            <td><strong>Format</strong></td>
+            <td>Carousel infografis</td>
+            <td>Storytelling + tools interaktif</td>
+          </tr>
+          <tr>
+            <td><strong>Nilai dasar</strong></td>
+            <td>Secular parenting</td>
+            <td>Fitrah + psikologi + Islam</td>
+          </tr>
+          <tr>
+            <td><strong>Produk</strong></td>
+            <td>Kelas online umum</td>
+            <td>Worksheet + tools sensorik + komunitas</td>
+          </tr>
+          <tr>
+            <td><strong>Kelemahan mereka</strong></td>
+            <td>Tidak punya tools konkret, tidak ada komunitas diskusi terjadwal</td>
+            <td><span class="tag tag-opp">Peluang kamu</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: SCHEDULE ===== -->
+  <div class="tab-panel" id="tab-schedule">
+    <div class="section-title">Content Schedule</div>
+    <div class="section-sub">Jadwal posting optimal @parenting.missrahma & Kidvera. Pilih mode sesuai energi minggu ini.</div>
+
+    <div class="card">
+      <div class="card-title">⚡ Mode Posting</div>
+      <div class="platform-toggle" id="mode-toggle">
+        <button class="pt-btn active" onclick="switchMode(this, 'slow')">🌱 Slow Mode (Quality First)</button>
+        <button class="pt-btn" onclick="switchMode(this, 'fast')">🚀 Fast Mode (Growth Agresif)</button>
+      </div>
+      <div class="info-box" id="mode-info">
+        <strong>Slow Mode</strong> — fokus kualitas & engagement. Cocok saat kamu sedang riset, nulis di Medium, atau sibuk dengan Kidvera. Minimal 2–3 konten/minggu tapi setiap konten dikerjakan serius.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 Jadwal Mingguan</div>
+      <div style="overflow-x:auto;">
+        <div class="schedule-grid" id="schedule-grid">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+        <span><span class="badge badge-r">R</span> Reels</span>
+        <span><span class="badge badge-s">S</span> Stories</span>
+        <span><span class="badge badge-c">C</span> Carousel</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⏰ Waktu Optimal Posting</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--brown);margin-bottom:8px;">Instagram</div>
+          <div style="font-size:0.83rem;color:var(--text-mid);line-height:2;">
+            🌅 06.00–09.00 WIB<br>
+            ☀️ 12.00–14.00 WIB<br>
+            🌙 19.00–21.00 WIB
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--brown);margin-bottom:8px;">Threads</div>
+          <div style="font-size:0.83rem;color:var(--text-mid);line-height:2;">
+            🌅 07.00–09.00 WIB<br>
+            🌙 20.00–22.00 WIB<br>
+            <em style="font-size:0.78rem;color:var(--text-soft);">Balas komentar dalam 15 menit posting</em>
+          </div>
+        </div>
+      </div>
+      <hr class="divider">
+      <div style="font-size:0.83rem;color:var(--text-mid);">
+        <strong style="color:var(--brown);">Saluran WA</strong> — kirim jadwal diskusi komunitas setiap <strong>Minggu malam 20.00</strong> untuk minggu berikutnya.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">✍️ Generator Siaran WA Mingguan</div>
+      <div class="card-desc">Buat pesan siaran untuk Saluran WA — announce jadwal diskusi komunitas minggu ini.</div>
+      <label>Topik Diskusi Minggu Ini</label>
+      <input type="text" id="wa-topik" placeholder="cth: Taktil — Psikologi Perabaan dan Perkembangan Emosional">
+      <label>Link Tools / Worksheet (opsional)</label>
+      <input type="text" id="wa-link" placeholder="cth: https://oval.ai/kidvera/tes-sensorik">
+      <button class="btn btn-primary" onclick="generateSiaran()">📢 Generate Siaran WA</button>
+      <div class="output-box" id="siaran-output" style="display:none;margin-top:16px;">
+        <button class="copy-btn" onclick="copyOutput('siaran-output')">Salin</button>
+        <div id="siaran-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: PERFORMA ===== -->
+  <div class="tab-panel" id="tab-performa">
+    <div class="section-title">Performa Konten</div>
+    <div class="section-sub">Log dan bandingkan performa konten kamu. Temukan pola konten yang paling efektif.</div>
+
+    <div class="card">
+      <div class="card-title">➕ Tambah Data Performa</div>
+      <div class="form-row">
+        <div>
+          <label>Judul Konten</label>
+          <input type="text" id="p-judul" placeholder="cth: Anak tidak mau menyentuh pasir">
+        </div>
+        <div>
+          <label>Tanggal</label>
+          <input type="text" id="p-tanggal" placeholder="cth: 26 Apr 2026">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Platform</label>
+          <select id="p-platform">
+            <option>Instagram Reels</option>
+            <option>Instagram Carousel</option>
+            <option>Threads</option>
+            <option>YouTube</option>
+            <option>Saluran WA</option>
+          </select>
+        </div>
+        <div>
+          <label>Tipe Hook</label>
+          <select id="p-hook">
+            <option>Problem-Solution</option>
+            <option>Relatable Struggle</option>
+            <option>Myth-Busting</option>
+            <option>Free Resource</option>
+            <option>Quick Tip</option>
+            <option>Origin Story</option>
+            <option>Failure Story</option>
+          </select>
+        </div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="metric-label">👁️ Tayangan</div>
+          <input type="number" id="p-tayangan" placeholder="0" style="margin:0;text-align:center;padding:6px 8px;">
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">❤️ Likes</div>
+          <input type="number" id="p-likes" placeholder="0" style="margin:0;text-align:center;padding:6px 8px;">
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">🔖 Simpan</div>
+          <input type="number" id="p-simpan" placeholder="0" style="margin:0;text-align:center;padding:6px 8px;">
+        </div>
+      </div>
+      <button class="btn btn-secondary" onclick="tambahPerforma()">+ Simpan Data</button>
+    </div>
+
+    <div class="card" id="performa-list-card">
+      <div class="card-title">📊 Log Performa</div>
+      <div id="performa-list" style="font-size:0.85rem;color:var(--text-soft);text-align:center;padding:20px 0;">
+        Belum ada data. Tambahkan konten pertamamu di atas.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💡 Insight dari Data</div>
+      <div id="performa-insight" style="font-size:0.85rem;color:var(--text-soft);">
+        Tambahkan minimal 3 konten untuk melihat pola & insight otomatis.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// =================== TABS ===================
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// =================== CHIPS ===================
+function selectChip(el, group) {
+  el.closest('.chip-group').querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectChipThreads(el) {
+  document.querySelectorAll('#hook-chips-threads .chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function getChipValue(groupId) {
+  const sel = document.querySelector('#' + groupId + ' .chip.selected');
+  return sel ? sel.textContent.trim() : '';
+}
+
+// =================== PLATFORM SWITCH (Script Tab) ===================
+function updatePlatformOptions() {
+  const platform = document.getElementById('s-platform').value;
+  const igSection = document.getElementById('hook-section-ig');
+  const threadsSection = document.getElementById('hook-section-threads');
+  const tipeSelect = document.getElementById('s-tipe');
+
+  if (platform === 'threads') {
+    igSection.style.display = 'none';
+    threadsSection.style.display = 'block';
+    tipeSelect.innerHTML = `
+      <option value="thread-panjang">Thread Panjang (8–12 post)</option>
+      <option value="thread-singkat">Thread Singkat (4–6 post)</option>
+      <option value="post-tunggal">Post Tunggal</option>
+      <option value="polling-threads">Polling</option>
+    `;
+  } else if (platform === 'wa-channel') {
+    igSection.style.display = 'block';
+    threadsSection.style.display = 'none';
+    tipeSelect.innerHTML = `
+      <option value="siaran">Pesan Siaran</option>
+      <option value="pengumuman">Pengumuman Kegiatan</option>
+      <option value="reminder">Reminder Diskusi</option>
+    `;
+  } else if (platform === 'youtube') {
+    igSection.style.display = 'block';
+    threadsSection.style.display = 'none';
+    tipeSelect.innerHTML = `
+      <option value="script-video">Script Video Full</option>
+      <option value="hook-intro">Hook + Intro (30 detik pertama)</option>
+      <option value="deskripsi">Deskripsi Video</option>
+    `;
+    // Ganti label hook untuk YouTube
+    document.querySelector('#hook-section-ig label').innerHTML = 'Pendekatan Konten <span style="font-size:0.75rem;color:var(--text-soft);">(YouTube)</span>';
+  } else {
+    // Instagram
+    igSection.style.display = 'block';
+    threadsSection.style.display = 'none';
+    tipeSelect.innerHTML = `
+      <option value="reels">Reels</option>
+      <option value="carousel">Carousel</option>
+      <option value="caption-stories">Caption (Feed)</option>
+      <option value="stories">Stories</option>
+      <option value="polling">Polling (Stories/Feed)</option>
+    `;
+    document.querySelector('#hook-section-ig label').innerHTML = 'Pendekatan Konten <span style="font-size:0.75rem;color:var(--text-soft);">(Instagram — Personal Branding AVA)</span>';
+  }
+
+  // Show/hide polling sub-options
+  tipeSelect.onchange = checkPollingSubOptions;
+  checkPollingSubOptions();
+}
+
+function checkPollingSubOptions() {
+  const tipe = document.getElementById('s-tipe').value;
+  const pollingSub = document.getElementById('polling-sub');
+  if (pollingSub) {
+    pollingSub.style.display = (tipe === 'polling' || tipe === 'polling-threads') ? 'block' : 'none';
+  }
+}
+
+// Jalankan saat load
+document.getElementById('s-tipe').addEventListener('change', checkPollingSubOptions);
+
+// Chip polling sub
+document.querySelectorAll('#hook-chips .chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    const pollingChip = this.textContent.includes('Polling');
+    const pollingSub = document.getElementById('polling-sub');
+    if (pollingSub) pollingSub.style.display = pollingChip ? 'block' : 'none';
+  });
+});
+
+// =================== PLATFORM TOGGLE (Evaluasi) ===================
+function selectPlatformEval(btn, val) {
+  document.querySelectorAll('#tab-evaluasi .pt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  btn.dataset.val = val;
+}
+
+function getEvalPlatform() {
+  const active = document.querySelector('#tab-evaluasi .pt-btn.active');
+  return active ? (active.dataset.val || active.textContent.trim()) : 'Instagram';
+}
+
+// =================== IMAGE UPLOAD ===================
+let uploadedImages = []; // [{base64, mimeType}]
+
+function handleImageUpload(event) {
+  const files = Array.from(event.target.files);
+  const previewRow = document.getElementById('img-preview-row');
+
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target.result.split(',')[1];
+      const mimeType = file.type;
+      uploadedImages.push({ base64, mimeType });
+
+      // Thumbnail
+      const thumb = document.createElement('div');
+      thumb.style.cssText = 'position:relative;width:80px;height:80px;';
+      thumb.innerHTML = `
+        <img src="${e.target.result}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:2px solid var(--amber-light);">
+        <div onclick="removeImage(${uploadedImages.length-1}, this.parentNode)" style="position:absolute;top:-6px;right:-6px;background:var(--brown);color:white;border-radius:50%;width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</div>
+      `;
+      previewRow.appendChild(thumb);
+
+      // Update upload area style
+      document.getElementById('upload-area').style.borderColor = 'var(--amber)';
+      document.getElementById('upload-area').style.background = 'var(--green-light)';
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function removeImage(idx, thumbEl) {
+  uploadedImages.splice(idx, 1);
+  thumbEl.remove();
+  if (uploadedImages.length === 0) {
+    document.getElementById('upload-area').style.borderColor = 'var(--amber-light)';
+    document.getElementById('upload-area').style.background = 'var(--amber-pale)';
+  }
+}
+
+// =================== SCHEDULE ===================
+const scheduleData = {
+  slow: [
+    { day: 'Senin', content: ['Reels', 'Stories'] },
+    { day: 'Selasa', content: ['Stories', 'Carousel'] },
+    { day: 'Rabu', content: ['Stories'] },
+    { day: 'Kamis', content: ['Reels', 'Stories'] },
+    { day: 'Jumat', content: ['Stories', 'Carousel'] },
+    { day: 'Sabtu', content: ['Reels', 'Stories'] },
+    { day: 'Minggu', content: ['Stories'] },
+  ],
+  fast: [
+    { day: 'Senin', content: ['Reels', 'Stories', 'Carousel'] },
+    { day: 'Selasa', content: ['Reels', 'Stories', 'Reels'] },
+    { day: 'Rabu', content: ['Reels', 'Stories', 'Carousel'] },
+    { day: 'Kamis', content: ['Reels', 'Stories', 'Reels'] },
+    { day: 'Jumat', content: ['Reels', 'Carousel', 'Stories'] },
+    { day: 'Sabtu', content: ['Reels', 'Stories', 'Reels'] },
+    { day: 'Minggu', content: ['Reels', 'Stories', 'Carousel'] },
+  ]
+};
+
+let currentMode = 'slow';
+
+function renderSchedule(mode) {
+  const grid = document.getElementById('schedule-grid');
+  const data = scheduleData[mode];
+  const cls = mode === 'slow' ? 'slow' : 'fast';
+  let html = `
+    <div class="sg-header">Hari</div>
+    <div class="sg-header">Instagram</div>
+    <div class="sg-header">Threads / WA</div>
+  `;
+  data.forEach(d => {
+    const igContent = d.content.map(c => {
+      const type = c === 'Reels' ? 'badge-r' : c === 'Stories' ? 'badge-s' : 'badge-c';
+      const short = c === 'Reels' ? 'R' : c === 'Stories' ? 'S' : 'C';
+      return `<span class="badge ${type}">${short}</span>`;
+    }).join(' ');
+    const threadsContent = mode === 'fast'
+      ? '<span style="font-size:0.8rem;">2–3 post + reply komentar</span>'
+      : '<span style="font-size:0.8rem;">1 post + engage</span>';
+    html += `
+      <div class="sg-day">${d.day}</div>
+      <div class="sg-cell ${cls}">${igContent}</div>
+      <div class="sg-cell ${cls}">${threadsContent}</div>
+    `;
+  });
+  grid.innerHTML = html;
+}
+
+function switchMode(btn, mode) {
+  document.querySelectorAll('#mode-toggle .pt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMode = mode;
+  renderSchedule(mode);
+  document.getElementById('mode-info').innerHTML = mode === 'slow'
+    ? '<strong>Slow Mode</strong> — fokus kualitas & engagement. Cocok saat kamu sedang riset, nulis di Medium, atau sibuk dengan Kidvera.'
+    : '<strong>Fast Mode</strong> — pertumbuhan agresif. 3–4 konten/hari. Butuh energi lebih — pakai saat kondisi kamu lagi on fire.';
+}
+
+renderSchedule('slow');
+
+// =================== API KEY & ENGINE ===================
+let currentEngine = localStorage.getItem('kidvera-engine') || 'gemini';
+
+function getApiKey() {
+  return localStorage.getItem('kidvera-key-' + currentEngine) || '';
+}
+
+function saveApiKey(key) {
+  localStorage.setItem('kidvera-key-' + currentEngine, key.trim());
+  localStorage.setItem('kidvera-engine', currentEngine);
+}
+
+function selectEngine(engine) {
+  currentEngine = engine;
+  // Update button styles
+  document.getElementById('btn-engine-gemini').style.cssText = engine === 'gemini'
+    ? 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--amber);background:var(--amber);color:white;font-weight:700;cursor:pointer;font-family:Syne,sans-serif;font-size:0.82rem;'
+    : 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-mid);font-weight:700;cursor:pointer;font-family:Syne,sans-serif;font-size:0.82rem;';
+  document.getElementById('btn-engine-grok').style.cssText = engine === 'grok'
+    ? 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--amber);background:var(--amber);color:white;font-weight:700;cursor:pointer;font-family:Syne,sans-serif;font-size:0.82rem;'
+    : 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-mid);font-weight:700;cursor:pointer;font-family:Syne,sans-serif;font-size:0.82rem;';
+  // Update instructions
+  document.getElementById('instructions-gemini').style.display = engine === 'gemini' ? 'block' : 'none';
+  document.getElementById('instructions-grok').style.display = engine === 'grok' ? 'block' : 'none';
+  // Update placeholder
+  document.getElementById('api-key-input').placeholder = engine === 'gemini' ? 'AIza...' : 'xai-...';
+  // Pre-fill existing key if any
+  const existing = localStorage.getItem('kidvera-key-' + engine) || '';
+  document.getElementById('api-key-input').value = existing ? '••••••••••••••••' : '';
+}
+
+// =================== AI CALL ===================
+async function callAI(messages, systemPrompt, maxTokens) {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    showApiKeyModal();
+    throw new Error('API key belum diisi');
+  }
+
+  if (currentEngine === 'gemini') {
+    return callGemini(messages, systemPrompt, maxTokens, apiKey);
+  } else {
+    return callGrok(messages, systemPrompt, maxTokens, apiKey);
+  }
+}
+
+async function callGemini(messages, systemPrompt, maxTokens, apiKey) {
+  const contents = messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: Array.isArray(m.content)
+      ? m.content.map(c => {
+          if (c.type === 'text') return { text: c.text };
+          if (c.type === 'image') return { inline_data: { mime_type: c.source.media_type, data: c.source.data }};
+          return { text: '' };
+        })
+      : [{ text: m.content }]
+  }));
+
+  const body = {
+    contents,
+    generationConfig: { maxOutputTokens: maxTokens || 1500, temperature: 0.8 }
+  };
+  if (systemPrompt) {
+    body.system_instruction = { parts: [{ text: systemPrompt }] };
+  }
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json();
+  if (data.error) throw new Error('Gemini error: ' + (data.error.message || JSON.stringify(data.error)));
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tidak ada respons.';
+}
+
+async function callGrok(messages, systemPrompt, maxTokens, apiKey) {
+  const msgs = systemPrompt
+    ? [{ role: 'system', content: systemPrompt }, ...messages]
+    : messages;
+
+  // Grok tidak support image — strip image content
+  const cleanMsgs = msgs.map(m => ({
+    role: m.role,
+    content: Array.isArray(m.content)
+      ? m.content.filter(c => c.type === 'text').map(c => c.text).join('\n')
+      : m.content
+  }));
+
+  const body = {
+    model: 'grok-3-mini',
+    max_tokens: maxTokens || 1500,
+    messages: cleanMsgs
+  };
+
+  const response = await fetch('https://api.x.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json();
+  if (data.error) throw new Error('Grok error: ' + (data.error.message || JSON.stringify(data.error)));
+  return data.choices?.[0]?.message?.content || 'Tidak ada respons.';
+}
+
+async function callAILong(messages, systemPrompt) {
+  return callAI(messages, systemPrompt, 4000);
+}
+
+// =================== API KEY MODAL ===================
+function showApiKeyModal() {
+  document.getElementById('api-key-modal').style.display = 'flex';
+  selectEngine(currentEngine);
+}
+
+function hideApiKeyModal() {
+  document.getElementById('api-key-modal').style.display = 'none';
+}
+
+function submitApiKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val || val.startsWith('•')) {
+    // Kalau isi dots = tidak diubah, tutup saja
+    if (getApiKey()) { hideApiKeyModal(); updateApiKeyStatus(); return; }
+    alert('Masukkan API key dulu ya!'); return;
+  }
+  saveApiKey(val);
+  hideApiKeyModal();
+  updateApiKeyStatus();
+}
+
+function updateApiKeyStatus() {
+  const statusEl = document.getElementById('api-key-status');
+  if (!statusEl) return;
+  const geminiKey = localStorage.getItem('kidvera-key-gemini');
+  const grokKey = localStorage.getItem('kidvera-key-grok');
+  const engineLabel = currentEngine === 'gemini' ? '🟦 Gemini' : '⚡ Grok';
+
+  if (getApiKey()) {
+    statusEl.innerHTML = `${engineLabel} aktif &nbsp;<button onclick="showApiKeyModal()" style="font-size:0.72rem;padding:3px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.3);background:transparent;cursor:pointer;color:var(--amber-light);">Ganti</button>`;
+  } else {
+    statusEl.innerHTML = `⚠️ Belum ada key &nbsp;<button onclick="showApiKeyModal()" style="font-size:0.72rem;padding:3px 10px;border-radius:6px;border:none;background:var(--amber);color:white;cursor:pointer;">Isi Sekarang</button>`;
+  }
+}
+
+function clearApiKey() {
+  if (confirm('Hapus API key ' + currentEngine + '?')) {
+    localStorage.removeItem('kidvera-key-' + currentEngine);
+    updateApiKeyStatus();
+  }
+}
+
+function setLoading(boxId, msg) {
+  const box = document.getElementById(boxId);
+  box.innerHTML = `<span class="spinner"></span>${msg}`;
+  box.classList.add('loading');
+}
+
+function setOutput(cardId, boxId, result) {
+  if (cardId) document.getElementById(cardId).style.display = 'block';
+  const box = document.getElementById(boxId);
+  box.classList.remove('loading');
+  box.innerHTML = `<button class="copy-btn" onclick="copyOutput('${boxId}')">Salin</button><div style="white-space:pre-wrap;">${result}</div>`;
+}
+
+// =================== GENERATE SCRIPT ===================
+async function generateScript() {
+  const judul = document.getElementById('s-judul').value || 'Stimulasi sensorik anak';
+  const platform = document.getElementById('s-platform').value;
+  const tipe = document.getElementById('s-tipe').value;
+  const durasi = getChipValue('durasi-chips');
+  const gaya = getChipValue('gaya-chips');
+
+  const btn = document.getElementById('btn-generate');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generating...';
+  document.getElementById('script-output-card').style.display = 'block';
+  setLoading('script-output', 'AI sedang menulis script...');
+
+  let prompt = '';
+  const brandCtx = `
+BRAND KIDVERA — konteks lengkap untuk semua konten:
+
+Kidvera adalah platform edukasi experiential learning Indonesia untuk anak usia dini hingga SMP (bukan hanya PAUD). Tagline: "In Their Own Way" — belajar sesuai cara anak, bukan cara orang tua.
+
+PILAR KONTEN KIDVERA (jangan fokus hanya ke satu pilar):
+1. WORKSHEET SESUAI PERKEMBANGAN — lembar kerja yang disesuaikan tahap tumbuh kembang anak (motorik, kognitif, bahasa, sosial-emosi, moral-agama), bisa disimpan & diakses langsung dari HP, tidak perlu cari link
+2. SENSORIK ANAK — stimulasi indera (taktil, visual, auditori, proprioseptif, vestibular), pentingnya pengalaman sensorik untuk perkembangan otak & regulasi emosi
+3. KEPRIBADIAN ANAK — memahami karakter bawaan anak, bukan membandingkan, menemukan kekuatan unik tiap anak
+4. KECERDASAN MAJEMUK — multiple intelligences (Gardner), setiap anak cerdas dengan caranya sendiri
+5. PENDIDIKAN BERBASIS FITRAH — tumbuh kembang sesuai fitrah Islam, pendidikan yang menghormati potensi bawaan lahir anak, bukan memaksakan standar luar
+6. PROGRAM KIDVERA — kegiatan outdoor/alam, workshop orang tua, komunitas diskusi terjadwal, tools interaktif
+7. PARENTING — pola asuh yang mendukung (bukan menghambat) perkembangan anak, termasuk kesalahan umum orang tua yang tidak disadari
+
+PERSONA RAHMA:
+- Ibu & pendidik dengan pengalaman langsung di kelas
+- Punya pengalaman gagal dan berhasil yang nyata — cerita dari lapangan, bukan teori buku
+- Target audiens: orang tua middle-upper class Indonesia, anak usia dini s/d SMP
+- Nilai: psikologi tumbuh kembang + nilai Islam + riset
+
+PENTING: Jangan selalu hubungkan ke "gaya belajar" — konten Kidvera jauh lebih luas. Pilih pilar yang paling relevan dengan topik yang diminta, dan sambungkan ke pengalaman nyata Rahma.`;
+
+  if (platform === 'threads') {
+    const tipecerita = getChipValue('hook-chips-threads');
+    const framework = getChipValue('framework-chips');
+    const isPolling = tipecerita.includes('Polling');
+
+    if (isPolling) {
+      prompt = `Kamu adalah content strategist untuk @parenting.missrahma (Kidvera).
+${brandCtx}
+
+Buat polling/pertanyaan untuk Threads tentang topik: "${judul}"
+Gaya: ${gaya}
+
+Format output:
+🗳️ PERTANYAAN UTAMA (1 kalimat kuat yang bikin orang mau jawab)
+📌 KONTEKS SINGKAT (2–3 kalimat latar belakang — pakai sudut pandang personal Rahma)
+🔘 PILIHAN A: [opsi pertama]
+🔘 PILIHAN B: [opsi kedua]
+🔘 PILIHAN C: [opsi ketiga — opsional]
+💬 FOLLOW-UP (1 kalimat mengundang komentar lebih dalam)
+
+Panduan: jujur tapi tidak TMI, relatable tapi tetap profesional. Bahasa Indonesia hangat.`;
+    } else {
+      const frameworkGuide = {
+        "Hero's Journey": "Status quo → Tantangan → Struggle → Transformation → New reality",
+        "Curiosity Bridge": "Known → Unknown → Bridge → Resolution",
+        "Kontras & Paradoks": "Expectation → Reality → Insight",
+        "Open Loop": "Question/Mystery → Partial info → More partial info → Resolution"
+      };
+
+      prompt = `Kamu adalah content strategist untuk @parenting.missrahma (Kidvera).
+${brandCtx}
+
+Buat thread Threads dengan:
+- Topik: "${judul}"
+- Tipe cerita: ${tipecerita}
+- Framework: ${framework} → struktur: ${frameworkGuide[framework] || 'sesuaikan dengan tipe cerita'}
+- Gaya: ${gaya}
+
+Panduan cerita personal (wajib):
+- Jujur tapi bukan TMI (too much information)
+- Relatable tapi tetap profesional
+- Vulnerable tapi tidak desperate
+- Personal tapi lesson-nya universal
+- Bukan formula kaku — tulis seperti orang nyata bercerita
+
+Format output — setiap tweet dipisah dengan nomor:
+1/ [hook kuat — langsung masuk ke cerita atau pertanyaan]
+2/ [bangun konteks...]
+3/ ...dst
+[tweet terakhir]: CTA natural — bukan hard sell, ajak diskusi atau simpan
+
+Panjang: ${durasi || '8–10 tweet'}. Bahasa Indonesia, autentik.`;
+    }
+
+  } else {
+    // Instagram / YouTube / Saluran WA
+    const hookApproach = getChipValue('hook-chips');
+    const isPolling = tipe === 'polling' || hookApproach.includes('Polling');
+
+    let formatGuide = '';
+
+    if (tipe === 'reels') {
+      formatGuide = `Buat FULL PRODUCTION SCRIPT format AVA (Video Script System). Output harus LENGKAP dan TIDAK TERPOTONG — tulis semua segmen sampai CTA dan caption selesai.
+
+━━━━━━━━━━━━━━━━━━━━
+🎥 VISUAL HOOK
+━━━━━━━━━━━━━━━━━━━━
+[Deskripsikan: apa yang keliatan di layar sebelum suara — posisi kamera, setting, props, gestur pembuka. Ini 0–2 detik pertama yang bikin orang tidak scroll.]
+
+━━━━━━━━━━━━━━━━━━━━
+📝 WRITTEN HOOK (teks di layar)
+━━━━━━━━━━━━━━━━━━━━
+[Kalimat teks di layar — singkat, kuat, bikin orang berhenti scroll]
+
+━━━━━━━━━━━━━━━━━━━━
+🗣️ VERBAL HOOK (yang diucapkan)
+━━━━━━━━━━━━━━━━━━━━
+[Kalimat pertama yang diucapkan — harus memperkuat atau kontras dengan written hook]
+
+━━━━━━━━━━━━━━━━━━━━
+🎬 SCRIPT PER SEGMEN
+━━━━━━━━━━━━━━━━━━━━
+[Bagi menjadi 4–5 segmen sesuai durasi ${durasi || '60 detik'}. WAJIB tulis semua segmen sampai habis. Tiap segmen:]
+
+SEGMEN 1 — [nama]
+📸 A-ROLL: [angle + posisi Rahma + ekspresi/gestur spesifik]
+🎞️ B-ROLL: [deskripsi visual placeholder — cth: "tampilkan video/foto anak sedang [aktivitas] — tambahkan teks overlay: '[keterangan]'"]
+🗣️ NARASI: "[kalimat yang diucapkan]"
+
+SEGMEN 2 — [nama]
+📸 A-ROLL: [...]
+🎞️ B-ROLL: [...]
+🗣️ NARASI: "[...]"
+
+SEGMEN 3 — [nama]
+📸 A-ROLL: [...]
+🎞️ B-ROLL: [...]
+🗣️ NARASI: "[...]"
+
+SEGMEN 4 — [nama]
+📸 A-ROLL: [...]
+🎞️ B-ROLL: [...]
+🗣️ NARASI: "[...]"
+
+[tambah SEGMEN 5 jika durasi lebih dari 45 detik]
+
+━━━━━━━━━━━━━━━━━━━━
+📣 CTA
+━━━━━━━━━━━━━━━━━━━━
+[Comment trigger / ajak save — bukan hard sell. Fokus 1 CTA saja sesuai goal konten ini.]
+
+━━━━━━━━━━━━━━━━━━━━
+📋 CAPTION FEED
+━━━━━━━━━━━━━━━━━━━━
+[2–3 kalimat ME-centric, hangat, perkuat isi video]
+
+#️⃣ HASHTAG (5–8 hashtag, mix antara broad dan niche):
+Contoh mix untuk Kidvera: #parentingIndonesia #tumbuhkembanganak #sensorianak #worksheetanak #pendidikananak #kidvera #belajarseruanak #parentingislami
+[Sesuaikan dengan topik spesifik konten ini — jangan copy paste, pilih yang paling relevan]`;
+
+    } else if (tipe === 'carousel') {
+      formatGuide = `Buat FULL CAROUSEL SCRIPT format AVA. Output:
+
+━━━━━━━━━━━━━━━━━━━━
+📝 WRITTEN HOOK (teks di cover)
+━━━━━━━━━━━━━━━━━━━━
+[Judul carousel yang bikin orang swipe — kuat, spesifik, bikin penasaran]
+
+━━━━━━━━━━━━━━━━━━━━
+🎨 SLIDE PER SLIDE
+━━━━━━━━━━━━━━━━━━━━
+SLIDE 1 — COVER
+📝 TEKS: [judul utama]
+🎨 VISUAL: [arahan desain — warna, foto, layout]
+
+SLIDE 2 — [nama poin]
+📝 TEKS: [max 2–3 kalimat — 1 poin saja]
+🎨 VISUAL: [B-ROLL placeholder / arahan visual]
+
+[lanjutkan tiap slide]
+
+SLIDE TERAKHIR — CTA
+📝 TEKS: [ajak save, share, atau comment]
+🎨 VISUAL: [arahan visual]
+
+━━━━━━━━━━━━━━━━━━━━
+📋 CAPTION FEED
+━━━━━━━━━━━━━━━━━━━━
+[2–3 kalimat — ME-centric, hangat]
+[3–5 hashtag]`;
+
+    } else if (tipe === 'stories') {
+      formatGuide = `Buat FULL STORIES SCRIPT format AVA. Output:
+
+━━━━━━━━━━━━━━━━━━━━
+📱 STORIES PER FRAME
+━━━━━━━━━━━━━━━━━━━━
+STORIES 1 — HOOK
+📝 TEKS BESAR: [kalimat atau pertanyaan yang bikin tap lanjut]
+🎨 VISUAL: [arahan: warna bg, sticker, font besar]
+🗣️ VERBAL (opsional): [...]
+
+STORIES 2 — [nama isi]
+📝 TEKS: [singkat — max 1 kalimat]
+🎨 VISUAL: [B-ROLL placeholder / foto / video pendek]
+🗣️ VERBAL: [...]
+
+[lanjutkan]
+
+STORIES TERAKHIR — CTA
+📝 TEKS: [ajak DM / link / polling / reply]
+🎨 VISUAL: [arahan sticker CTA / link box]
+
+━━━━━━━━━━━━━━━━━━━━
+💡 TIPS PRODUKSI
+━━━━━━━━━━━━━━━━━━━━
+[2–3 tips spesifik: warna, font, sticker, timing tiap frame]`;
+
+    } else if (isPolling) {
+      formatGuide = `Buat POLLING SCRIPT format AVA. Output:
+
+━━━━━━━━━━━━━━━━━━━━
+📝 WRITTEN HOOK (teks di layar / caption pembuka)
+━━━━━━━━━━━━━━━━━━━━
+[Kalimat yang bikin orang stop — ME-centric dari pengalaman Rahma]
+
+━━━━━━━━━━━━━━━━━━━━
+🗳️ PERTANYAAN POLLING
+━━━━━━━━━━━━━━━━━━━━
+[1 pertanyaan spesifik dan relatable]
+
+🔘 PILIHAN A: [opsi pertama]
+🔘 PILIHAN B: [opsi kedua]
+🔘 PILIHAN C: [opsi ketiga — opsional]
+
+━━━━━━━━━━━━━━━━━━━━
+📌 KONTEKS (narasi singkat)
+━━━━━━━━━━━━━━━━━━━━
+[1–2 kalimat dari sudut pandang pribadi Rahma — kenapa topik ini penting buat dia]
+
+━━━━━━━━━━━━━━━━━━━━
+📣 CTA
+━━━━━━━━━━━━━━━━━━━━
+[Ajak komentar lebih dalam atau share ke teman yang relate]
+[3 hashtag]`;
+
+    } else {
+      // caption feed
+      formatGuide = `Buat CAPTION SCRIPT format AVA. Output:
+
+━━━━━━━━━━━━━━━━━━━━
+📝 WRITTEN HOOK (baris pertama caption)
+━━━━━━━━━━━━━━━━━━━━
+[Kalimat pertama yang kelihatan sebelum "...more" — harus bikin orang klik]
+
+━━━━━━━━━━━━━━━━━━━━
+📖 BODY CAPTION
+━━━━━━━━━━━━━━━━━━━━
+[Cerita / isi — sudut pandang pribadi Rahma sebagai ibu & guru. Bukan tips generik. Authentic story dulu, insight belakangan. Pendek paragraf, mudah dibaca di HP.]
+
+━━━━━━━━━━━━━━━━━━━━
+💡 PUNCHLINE
+━━━━━━━━━━━━━━━━━━━━
+[1 kalimat kuat yang bikin orang save atau screenshot]
+
+━━━━━━━━━━━━━━━━━━━━
+📣 CTA
+━━━━━━━━━━━━━━━━━━━━
+[Ajak komentar / save — natural, bukan hard sell]
+
+#️⃣ [3–5 hashtag intentional yang relevan]`;
+    }
+
+    prompt = `Kamu adalah production director dan content strategist untuk @parenting.missrahma (Kidvera).
+${brandCtx}
+
+Topik: "${judul}"
+Platform: Instagram
+Format: ${tipe}
+Pendekatan: ${hookApproach}
+Gaya: ${gaya}
+Durasi: ${durasi || '60 detik'}
+
+Prinsip personal branding Instagram Rahma (WAJIB):
+- ME-centric: tampilkan pengalaman nyata Rahma sebagai ibu & pendidik — bukan tips generik
+- Perspektif unik yang hanya bisa datang dari orang yang ada langsung di kelas
+- Authentic story dulu, insight belakangan
+- Bahasa Indonesia hangat, tidak kaku, tidak ceramah
+
+${formatGuide}
+
+Untuk B-ROLL: tulis sebagai placeholder deskripsi yang bisa Rahma isi sendiri, contoh: "[B-ROLL: video anak sedang [aktivitas sensorik] — tambahkan jumlah views di bawah screenshot]"
+Untuk A-ROLL: deskripsikan angle kamera, posisi, dan gestur secara spesifik.`;
+  }
+
+  try {
+    const result = await callAILong([{ role: 'user', content: prompt }]);
+    setOutput('script-output-card', 'script-output', result);
+  } catch(e) {
+    setOutput('script-output-card', 'script-output', '❌ Error: ' + e.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✨ Generate Script dengan AI';
+}
+
+// =================== EVALUASI (dengan screenshot) ===================
+async function evaluasiPost() {
+  const judul = document.getElementById('e-judul').value || '';
+  const caption = document.getElementById('e-script').value || '';
+  const platform = getEvalPlatform();
+
+  if (uploadedImages.length === 0) {
+    alert('Upload dulu screenshot insights dari Instagram ya!');
+    return;
+  }
+
+  const btn = document.getElementById('btn-eval');
+  btn.disabled = true;
+  btn.textContent = '⏳ AI sedang baca screenshot...';
+  document.getElementById('eval-output-card').style.display = 'block';
+  setLoading('eval-output', 'AI sedang membaca angka dari screenshot insights...');
+
+  // Build message with images
+  const content = [];
+
+  uploadedImages.forEach((img, i) => {
+    content.push({
+      type: 'image',
+      source: { type: 'base64', media_type: img.mimeType, data: img.base64 }
+    });
+  });
+
+  content.push({
+    type: 'text',
+    text: `Kamu adalah content analyst untuk @parenting.missrahma (Kidvera).
+
+Kidvera: platform edukasi experiential learning Indonesia — pilar: worksheet perkembangan anak, sensorik, kepribadian, kecerdasan majemuk, fitrah Islam, program outdoor, parenting. Persona Rahma: ibu & pendidik langsung di kelas, audiens middle-upper class Indonesia.
+
+Screenshot insight dari post ${platform}.
+${judul ? `Judul/topik: ${judul}` : ''}
+${caption ? `Caption: "${caption}"` : ''}
+
+LANGKAH 1 — Baca semua angka dari screenshot (Reach, Views/Plays, Avg Watch Time, Likes, Komentar, Simpan, Share, Profile Visit, Follow dari post ini).
+
+LANGKAH 2 — Hitung metrik berikut dari angka yang terbaca:
+- Retention Rate = (Avg Watch Time ÷ Total Durasi Video) × 100%
+- Engagement Rate (ER) = (Like + Komen + Simpan + Share) ÷ Reach × 100%
+- Visiting Rate (CTR) = Profile Visit ÷ Reach × 100% (jika ada)
+- Follow Rate = Follow ÷ Profile Visit × 100% (jika ada)
+
+LANGKAH 3 — Evaluasi berdasarkan framework SYCA Winning Content:
+
+━━━━━━━━━━━━━━━━━━━━
+📊 METRIK TERBACA
+━━━━━━━━━━━━━━━━━━━━
+[Sebutkan semua angka yang berhasil dibaca dari screenshot]
+
+━━━━━━━━━━━━━━━━━━━━
+🧮 HASIL KALKULASI
+━━━━━━━━━━━━━━━━━━━━
+Retention Rate: [hasil]%  → [interpretasi: >50% bagus, >70% sangat bagus]
+Engagement Rate: [hasil]% → [interpretasi: >3% bagus untuk parenting niche Indonesia]
+Visiting Rate: [hasil]% (jika data tersedia)
+Follow Rate: [hasil]% (jika data tersedia)
+
+━━━━━━━━━━━━━━━━━━━━
+📈 DIAGNOSA PERFORMA
+━━━━━━━━━━━━━━━━━━━━
+[Apakah ini bisa disebut Winning Content? Winning = ER lebih tinggi dari rata-rata akunmu]
+[Mana yang perlu diperhatikan: reach? retention? engagement?]
+
+━━━━━━━━━━━━━━━━━━━━
+🎯 ANALISIS HOOK & RETENTION
+━━━━━━━━━━━━━━━━━━━━
+[Hook visual, written, verbal — seberapa kuat? Apakah Retention Rate menunjukkan orang drop di awal atau bertahan?]
+[Mini hook di tengah video — apakah ada yang bisa diperbaiki untuk menjaga orang menonton sampai akhir?]
+
+━━━━━━━━━━━━━━━━━━━━
+💡 ANALISIS ENGAGEMENT
+━━━━━━━━━━━━━━━━━━━━
+[Simpan tinggi tapi komentar rendah? Likes banyak tapi share sedikit? Apa artinya untuk konten berikutnya?]
+[Apakah konten ini lebih menarik followers atau non-followers? Apa implikasinya?]
+
+━━━━━━━━━━━━━━━━━━━━
+⚠️ MASALAH UTAMA
+━━━━━━━━━━━━━━━━━━━━
+[1–2 masalah paling kritis berdasarkan data — spesifik, bukan generik]
+
+━━━━━━━━━━━━━━━━━━━━
+✅ REKOMENDASI KONKRET (framework SYCA: Test, Operate, Test, Exit)
+━━━━━━━━━━━━━━━━━━━━
+1. [Rekomendasi spesifik berdasarkan data — bisa langsung diterapkan di post berikutnya]
+2. [Rekomendasi kedua]
+3. [Rekomendasi ketiga]
+
+━━━━━━━━━━━━━━━━━━━━
+🔁 VERSI PERBAIKAN HOOK
+━━━━━━━━━━━━━━━━━━━━
+Written Hook baru: "[tulis ulang — lebih kuat, lebih ME-centric]"
+Verbal Hook baru: "[kalimat pertama yang lebih menarik]"
+
+━━━━━━━━━━━━━━━━━━━━
+📌 KEPUTUSAN KONTEN SELANJUTNYA
+━━━━━━━━━━━━━━━━━━━━
+[Apakah topik ini layak diulang (repurpose) dengan angle berbeda? Atau pivot ke topik lain?]
+[Format apa yang disarankan untuk konten berikutnya: Reels/Carousel/Polling?]
+
+Bahasa Indonesia. Langsung, actionable, dan gunakan angka nyata dari screenshot.`
+  });
+
+  try {
+    const result = await callAILong([{ role: 'user', content }]);
+    setOutput('eval-output-card', 'eval-output', result);
+  } catch(e) {
+    setOutput('eval-output-card', 'eval-output', '❌ Error: ' + e.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🔬 Evaluasi dengan AI';
+}
+
+// =================== KOMPETITOR ===================
+async function analisisKompetitor() {
+  const niche = document.getElementById('k-niche').value || 'parenting Indonesia';
+  const platform = getChipValue('komp-platform-chips');
+  const fokus = getChipValue('komp-fokus-chips');
+
+  document.getElementById('komp-output-card').style.display = 'block';
+  setLoading('komp-output', 'AI sedang menganalisis kompetitor...');
+
+  const prompt = `Kamu adalah brand strategist untuk Kidvera (@parenting.missrahma).
+
+Kidvera adalah platform edukasi experiential learning Indonesia untuk anak usia dini s/d SMP. Pilar konten: worksheet sesuai perkembangan, sensorik anak, kepribadian anak, kecerdasan majemuk, pendidikan berbasis fitrah Islam, program outdoor/alam, dan parenting. Persona Rahma: ibu & pendidik langsung di kelas, audiens middle-upper class.
+
+Analisis kompetitor niche: "${niche}" di platform ${platform}
+Fokus: ${fokus}
+
+Berikan:
+🔍 GAMBARAN KOMPETITOR NICHE INI
+✅ KELEBIHAN MEREKA
+❌ KELEMAHAN MEREKA
+🎯 PELUANG DIFERENSIASI KIDVERA (experiential learning + sensorik + nilai Islam)
+💡 STRATEGI KONTEN UNTUK UNGGULI MEREKA (3 taktik konkret)
+📝 CONTOH HOOK YANG BELUM BANYAK DIPAKAI DI NICHE INI (2 contoh)
+
+Bahasa Indonesia, konkret dan langsung bisa dipakai.`;
+
+  try {
+    const result = await callAI([{ role: 'user', content: prompt }]);
+    setOutput('komp-output-card', 'komp-output', result);
+  } catch(e) {
+    setOutput('komp-output-card', 'komp-output', '❌ Gagal analisis. Coba lagi.');
+  }
+}
+
+// =================== SIARAN WA ===================
+async function generateSiaran() {
+  const topik = document.getElementById('wa-topik').value || 'Diskusi mingguan Kidvera';
+  const link = document.getElementById('wa-link').value;
+
+  const output = document.getElementById('siaran-output');
+  output.style.display = 'block';
+  output.innerHTML = '<span class="spinner"></span>Membuat teks siaran...';
+  output.classList.add('loading');
+
+  const prompt = `Buat pesan siaran WhatsApp untuk Saluran WA Kidvera (@parenting.missrahma).
+
+Kidvera: platform edukasi experiential learning — worksheet perkembangan anak, sensorik, kepribadian, kecerdasan majemuk, fitrah Islam, program outdoor. Audiens: orang tua middle-upper class Indonesia.
+
+Topik: ${topik}
+Link: ${link || 'tidak ada'}
+Gaya: hangat, seperti teman, pendek (5–7 baris), ada emoji, ada ajakan diskusi di komunitas WA.
+Tulis langsung tanpa penjelasan.`;
+
+  try {
+    const result = await callAI([{ role: 'user', content: prompt }]);
+    output.classList.remove('loading');
+    output.innerHTML = `<button class="copy-btn" onclick="copyOutput('siaran-output')">Salin</button><div style="white-space:pre-wrap;">${result}</div>`;
+  } catch(e) {
+    output.classList.remove('loading');
+    output.innerHTML = '❌ Gagal generate. Coba lagi.';
+  }
+}
+
+// =================== PERFORMA LOG ===================
+let performaData = JSON.parse(localStorage.getItem('kidvera-performa') || '[]');
+
+function tambahPerforma() {
+  const item = {
+    judul: document.getElementById('p-judul').value,
+    tanggal: document.getElementById('p-tanggal').value,
+    platform: document.getElementById('p-platform').value,
+    hook: document.getElementById('p-hook').value,
+    tayangan: +document.getElementById('p-tayangan').value || 0,
+    likes: +document.getElementById('p-likes').value || 0,
+    simpan: +document.getElementById('p-simpan').value || 0,
+  };
+  if (!item.judul) { alert('Isi judul konten dulu ya!'); return; }
+  performaData.unshift(item);
+  localStorage.setItem('kidvera-performa', JSON.stringify(performaData));
+  renderPerforma();
+  ['p-judul','p-tanggal','p-tayangan','p-likes','p-simpan'].forEach(id => document.getElementById(id).value = '');
+}
+
+function renderPerforma() {
+  const list = document.getElementById('performa-list');
+  if (!performaData.length) {
+    list.innerHTML = '<div style="font-size:0.85rem;color:var(--text-soft);text-align:center;padding:20px 0;">Belum ada data. Tambahkan konten pertamamu di atas.</div>';
+    return;
+  }
+  list.innerHTML = performaData.map((d, i) => {
+    const er = d.tayangan > 0 ? ((d.likes + d.simpan) / d.tayangan * 100).toFixed(1) : '-';
+    return `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:10px;">
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:0.88rem;color:var(--brown);">${d.judul}</div>
+          <div style="font-size:0.76rem;color:var(--text-soft);margin-top:3px;">${d.platform} · ${d.hook} · ${d.tanggal}</div>
+          <div style="font-size:0.8rem;color:var(--text-mid);margin-top:6px;">
+            👁️ ${d.tayangan.toLocaleString()} &nbsp;❤️ ${d.likes.toLocaleString()} &nbsp;🔖 ${d.simpan.toLocaleString()} &nbsp;
+            <strong style="color:var(--amber);">ER: ${er}%</strong>
+          </div>
+        </div>
+        <button onclick="hapusPerforma(${i})" style="background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:0.78rem;padding:4px;">✕</button>
+      </div>`;
+  }).join('');
+  renderInsight();
+}
+
+function hapusPerforma(i) {
+  performaData.splice(i, 1);
+  localStorage.setItem('kidvera-performa', JSON.stringify(performaData));
+  renderPerforma();
+}
+
+function renderInsight() {
+  const insight = document.getElementById('performa-insight');
+  if (performaData.length < 3) {
+    insight.innerHTML = '<span style="color:var(--text-soft);">Tambahkan minimal 3 konten untuk melihat pola & insight otomatis.</span>';
+    return;
+  }
+  const sorted = [...performaData].sort((a,b) => (b.likes+b.simpan)/Math.max(b.tayangan,1) - (a.likes+a.simpan)/Math.max(a.tayangan,1));
+  const best = sorted[0];
+  const hookCount = {};
+  performaData.forEach(d => { hookCount[d.hook] = (hookCount[d.hook]||0)+1; });
+  const topHook = Object.entries(hookCount).sort((a,b)=>b[1]-a[1])[0][0];
+  insight.innerHTML = `
+    <div style="margin-bottom:10px;">🏆 <strong>Konten terbaik:</strong> "${best.judul}" — ER tertinggi.</div>
+    <div style="margin-bottom:10px;">🎣 <strong>Hook paling sering dipakai:</strong> ${topHook}. Coba variasikan minggu ini.</div>
+    <div>📊 <strong>Total log:</strong> ${performaData.length} konten dari ${[...new Set(performaData.map(d=>d.platform))].join(', ')}.</div>
+  `;
+}
+
+renderPerforma();
+
+// =================== INIT ===================
+updateApiKeyStatus();
+if (!getApiKey()) {
+  // Tunda sedikit supaya halaman load dulu
+  setTimeout(() => showApiKeyModal(), 600);
+}
+
+// =================== COPY ===================
+function copyOutput(boxId) {
+  const box = document.getElementById(boxId);
+  const text = box.innerText.replace('Salin','').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = box.querySelector('.copy-btn');
+    if (btn) { btn.textContent = '✓ Tersalin!'; setTimeout(() => btn.textContent = 'Salin', 2000); }
+  });
+}
+function copyOutputText() { copyOutput('script-output'); }
+</script>
+</body>
+</html>
